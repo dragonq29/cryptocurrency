@@ -2,13 +2,19 @@ import time
 import pyupbit
 import datetime
 import requests
+import sys
+
+if len(sys.argv) > 1:
+    coinType = sys.argv[1]
+else:
+    print("put Coin Type in argv")
+    exit(1)
 
 access = "access"
 secret = "secret"
 myToken = 'myToken'
 
 fee = 0.0005 # 업비트 수수료 0.05%
-coinType = 'MED'
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
