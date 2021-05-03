@@ -70,12 +70,13 @@ while True:
             # if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    buy_result = upbit.buy_market_order("KRW-" + coinType, krw*(1-fee))
+                    buy_result = upbit.buy_market_order("KRW-" + coinType, krw * (1-fee))
                     post_message(myToken,"#upbit", coinType + " buy : " +str(buy_result))
         else:
-            btc = get_balance(coinType)
-            if btc > 0.00008: # 가지고 있는 BTC가 약 5천원(0.00008) 이상일때 전량 매도
-                sell_result = upbit.sell_market_order("KRW-" + coinType, btc*(1-fee))
+            coin = get_balance(coinType)
+            current_price = upbit.get_current_price("KRW-" + coinType)
+            if (coin * (1-fee)) > 5000: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
+                sell_result = upbit.sell_market_order("KRW-" + coinType, coin * (1-fee))
                 post_message(myToken,"#upbit", coinType + " buy : " +str(sell_result))
         time.sleep(1)
     except Exception as e:
