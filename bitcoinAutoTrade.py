@@ -3,6 +3,7 @@ import pyupbit
 import datetime
 import requests
 import sys
+import traceback
 
 if len(sys.argv) > 1:
     coinType = sys.argv[1]
@@ -88,5 +89,7 @@ while True:
         time.sleep(1)
     except Exception as e:
         print(e)
-        post_message(myToken,"#upbit", e)
+        post_message(myToken, "#upbit", e)
+        traceback.print_exc()
+        post_message(myToken, "#upbit", traceback.format_exc())
         time.sleep(1)
