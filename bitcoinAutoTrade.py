@@ -10,6 +10,7 @@ if len(sys.argv) > 1:
 else:
     print("put Coin Type in argv")
     exit(1)
+target_field = "KRW-" + coinType
 
 access = "access"
 secret = "secret"
@@ -66,25 +67,25 @@ post_message(myToken,"#upbit", "autotrade start")
 while True:
     try:
         now = datetime.datetime.now()
-        start_time = get_start_time("KRW-" + coinType)
+        start_time = get_start_time(target_field)
         end_time = start_time + datetime.timedelta(days=1)
 
         # 9:00 < 현재 < #8:59:50
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price("KRW-" + coinType, 0.5)
-            ma15 = get_ma15("KRW-" + coinType)
-            current_price = get_current_price("KRW-" + coinType)
+            target_price = get_target_price(target_field, 0.5)
+            ma15 = get_ma15(target_field)
+            current_price = get_current_price(target_field)
             if target_price < current_price and ma15 < current_price:
             # if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    buy_result = upbit.buy_market_order("KRW-" + coinType, krw * (1-fee))
+                    buy_result = upbit.buy_market_order(target_field, krw * (1-fee))
                     post_message(myToken,"#upbit", coinType + " buy : " +str(buy_result))
         else:
-            coin = get_balance(coinType)
-            current_price = get_current_price("KRW-" + coinType)
+            coin = get_balance(target_field)
+            current_price = get_current_price(target_field)
             if (coin * (1-fee)) > 5000: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
-                sell_result = upbit.sell_market_order("KRW-" + coinType, coin * (1-fee))
+                sell_result = upbit.sell_market_order(target_field, coin * (1-fee))
                 post_message(myToken,"#upbit", coinType + " buy : " +str(sell_result))
         time.sleep(1)
     except Exception as e:
