@@ -84,7 +84,8 @@ while True:
         else:
             coin = get_balance(target_field)
             current_price = get_current_price(target_field)
-            if coin * current_price > 5000: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
+            margin = 100 # get_current_price를 호출했을 때도 값은 변하고 있으니까, 조건 true를 위해 마진으로 100원 잡아줌
+            if coin * current_price > 5000 + margin: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
                 sell_result = upbit.sell_market_order(target_field, coin)
                 post_message(myToken,"#upbit", coinType + " buy : " +str(sell_result))
         time.sleep(1)
