@@ -84,8 +84,8 @@ while True:
         else:
             coin = get_balance(target_field)
             current_price = get_current_price(target_field)
-            if (coin * (1-fee)) * current_price > 5000: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
-                sell_result = upbit.sell_market_order(target_field, coin * (1-fee))
+            if coin * current_price > 5000: # 가지고 있는 Coin이 5천원 이상일때 전량 매도
+                sell_result = upbit.sell_market_order(target_field, coin)
                 post_message(myToken,"#upbit", coinType + " buy : " +str(sell_result))
         time.sleep(1)
     except Exception as e:
