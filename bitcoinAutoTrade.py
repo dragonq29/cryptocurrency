@@ -17,6 +17,7 @@ secret = "secret"
 myToken = 'myToken'
 
 fee = 0.0005 # 업비트 수수료 0.05%
+k = 0.5
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -72,7 +73,7 @@ while True:
 
         # 9:00 < 현재 < #8:59:50
         if start_time < now < (end_time - datetime.timedelta(seconds=10)):
-            target_price = get_target_price(target_field, 0.5)
+            target_price = get_target_price(target_field, k)
             ma15 = get_ma15(target_field)
             current_price = get_current_price(target_field)
             if target_price < current_price and ma15 < current_price:
