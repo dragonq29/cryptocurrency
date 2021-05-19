@@ -67,7 +67,7 @@ post_message(myToken,"#upbit", "autotrade start")
 # 자동매매 시작
 while True:
     try:
-        now = datetime.datetime.now()
+        now = datetime.datetime.utcnow() - datetime.timedelta(hours=9) // KST 고려
         start_time = get_start_time(target_field)
         end_time = start_time + datetime.timedelta(days=1)
 
